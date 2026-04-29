@@ -222,6 +222,20 @@ curl -X POST "http://localhost:8000/query" \
 ```
 
 ---
+## Datos de prueba
+
+> El documento utilizado para el desarrollo y validación del pipeline RAG es un artículo científico de acceso abierto sobre complejos tetra-NHC de metales de transición con actividad antitumoral, seleccionado por su relevancia directa con la temática del proyecto y su alta densidad técnica (fórmulas químicas, tablas de caracterización, nomenclatura especializada).
+
+**Referencia:**
+
+Wolfgang R E Büchele, Tim P Schlachta, Andreas L Gebendorfer, Jenny Pamperin, Leon F Richter, Michael J Sauer, Aram Prokop, Fritz E Kühn (2024). Synthesis, characterization, and biomedical evaluation of ethylene-bridged tetra-NHC Pd(ii), Pt(ii) and Au(iii) complexes, with apoptosis-inducing properties in cisplatin-resistant neuroblastoma cells. *Frontiers in Chemistry*.
+PMC: [PMC10967698](https://pmc.ncbi.nlm.nih.gov/articles/PMC10967698/)
+
+**Condiciones de uso:**
+
+El documento se utiliza exclusivamente con fines de investigación y
+desarrollo. No se distribuye ni se incluye en el repositorio — está
+excluido del control de versiones mediante `.gitignore`.
 
 ## Despliegue con Docker
 
