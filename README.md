@@ -1,8 +1,8 @@
 # Chem RAG Assistant
 
-> API REST inteligente para consulta de literatura científica de química mediante Generación Aumentada por Recuperación (RAG).
+API REST inteligente para consulta de literatura científica de química mediante Generación Aumentada por Recuperación (RAG).
 
-> **Proyecto en desarrollo activo.** La arquitectura y los endpoints están especificados y en proceso de implementación. Consulta la [Hoja de Ruta](#hoja-de-ruta) para conocer el estado actual de cada componente.
+**Proyecto en desarrollo activo.** La arquitectura y los endpoints están especificados y en proceso de implementación. Consulta la [Hoja de Ruta](#hoja-de-ruta) para conocer el estado actual de cada componente.
 
 ---
 
