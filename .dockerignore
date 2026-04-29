@@ -1,0 +1,9 @@
+.env
+.git
+.gitignore
+data/raw/
+notebooks/
+tests/
+__pycache__/
+*.pyc
+chroma_db/
