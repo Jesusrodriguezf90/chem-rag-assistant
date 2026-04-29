@@ -51,32 +51,32 @@ El sistema sigue una arquitectura de pipeline RAG en tres fases: ingesta, recupe
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                      Cliente / Usuario                       │
-│              (Swagger UI · curl · Frontend externo)          │
+│                      Cliente / Usuario                      │
+│              (Swagger UI · curl · Frontend externo)         │
 └───────────────────────────┬─────────────────────────────────┘
                             │  HTTP REST
                             ▼
 ┌─────────────────────────────────────────────────────────────┐
-│               Contenedor Docker (HF Spaces)                  │
-│                                                              │
+│               Contenedor Docker (HF Spaces)                 │
+│                                                             │
 │   ┌─────────────────────────────────────────────────────┐   │
-│   │              FastAPI + Uvicorn                       │   │
-│   │         /upload · /query · /health                   │   │
+│   │              FastAPI + Uvicorn                      │   │
+│   │         /upload · /query · /health                  │   │
 │   └───────────────────────┬─────────────────────────────┘   │
-│                           │                                  │
+│                           │                                 │
 │   ┌───────────────────────▼─────────────────────────────┐   │
-│   │                  Pipeline RAG                        │   │
-│   │                                                      │   │
+│   │                  Pipeline RAG                       │   │
+│   │                                                     │   │
 │   │  ┌───────────┐  ┌───────────┐  ┌─────────────────┐  │   │
-│   │  │  Ingesta  │─▶│ Embeddings│─▶│  Base Vectorial  │  │   │
-│   │  │ (Docling) │  │  (BGE-M3) │  │   (ChromaDB)     │  │   │
+│   │  │  Ingesta  │─▶│ Embeddings│─▶│  Base Vectorial│  │   │
+│   │  │ (Docling) │  │  (BGE-M3) │  │   (ChromaDB)    │  │   │
 │   │  └───────────┘  └───────────┘  └────────┬────────┘  │   │
-│   │                                          │           │   │
-│   │  ┌───────────────────────────────────────▼────────┐  │   │
-│   │  │        Recuperación + Generación               │  │   │
-│   │  │   (LangChain + Qwen3 vía HF Inference API)     │  │   │
-│   │  └────────────────────────────────────────────────┘  │   │
-│   └──────────────────────────────────────────────────────┘   │
+│   │                                         │           │   │
+│   │  ┌───────────────────────────────────────▼────────┐ │   │
+│   │  │        Recuperación + Generación               │ │   │
+│   │  │   (LangChain + Qwen3 vía HF Inference API)     │ │   │
+│   │  └────────────────────────────────────────────────┘ │   │
+│   └─────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
 ```
 
