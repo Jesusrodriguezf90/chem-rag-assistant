@@ -107,6 +107,9 @@ chem-rag-assistant/
 ├── .github/
 │   └── workflows/              # Pipelines CI/CD (planificado)
 │
+├── config/
+│   └── cleaning_rules.yaml     # Reglas de limpieza específicas por documento
+│
 ├── data/
 │   └── raw/                    # PDFs de entrada (excluidos de Git)
 │
@@ -275,8 +278,8 @@ La API quedará accesible en:
 | ✅ | Estructura del proyecto y documentación |
 | ✅ | Configuración inicial del entorno (notebook 00_setup) |
 | ✅ | Prototipo de ingesta con Docling (notebook) |
-| 🔲 | Pipeline de embeddings con BGE-M3 (notebook) |
-| 🔲 | Integración con ChromaDB (notebook) |
+| ✅ | Pipeline de embeddings con BGE-M3 (notebook) |
+| ✅ | Integración con ChromaDB y evaluación de recuperación (notebook) |
 | 🔲 | Pipeline RAG completo con LangChain (notebook) |
 | 🔲 | Implementación de la API REST con FastAPI |
 | 🔲 | Modelos Pydantic y validación de esquemas |

@@ -12,6 +12,9 @@ langchain-text-splitters>=0.2.0
 # Base de datos vectorial
 chromadb>=0.5.0
 
+# Matemáticas y arrays
+numpy>=1.26.0
+
 # API REST
 fastapi>=0.110.0
 uvicorn>=0.29.0
