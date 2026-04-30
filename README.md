@@ -111,6 +111,7 @@ chem-rag-assistant/
 │   └── raw/                    # PDFs de entrada (excluidos de Git)
 │
 ├── notebooks/
+│   ├── 00_setup.ipynb          # Configuración inicial del entorno (ejecutar una vez)
 │   ├── 01_ingesta.ipynb        # Prototipo: carga y troceado de PDFs
 │   ├── 02_embeddings.ipynb     # Prototipo: generación e indexación de embeddings
 │   ├── 03_recuperacion.ipynb   # Prototipo: pipeline de recuperación
@@ -272,7 +273,8 @@ La API quedará accesible en:
 | Estado | Componente |
 |---|---|
 | ✅ | Estructura del proyecto y documentación |
-| 🔲 | Prototipo de ingesta con Docling (notebook) |
+| ✅ | Configuración inicial del entorno (notebook 00_setup) |
+| ✅ | Prototipo de ingesta con Docling (notebook) |
 | 🔲 | Pipeline de embeddings con BGE-M3 (notebook) |
 | 🔲 | Integración con ChromaDB (notebook) |
 | 🔲 | Pipeline RAG completo con LangChain (notebook) |

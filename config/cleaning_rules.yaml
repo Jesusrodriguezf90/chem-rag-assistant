@@ -1,0 +1,13 @@
+# cleaning_rules.yaml
+# Reglas de limpieza específicas por documento para el pipeline RAG.
+# La limpieza universal se aplica siempre en 01_ingesta.ipynb.
+# Añadir una entrada por cada PDF que requiera limpieza adicional.
+# Clave: nombre del PDF sin extensión.
+
+PMC10967698:
+  remove_patterns:
+    - "RSC Advances"
+    - "## PAPER"
+    - "rsc.li/rsc-advances"
+  remove_affiliations: true
+  fix_ocr_errors: true

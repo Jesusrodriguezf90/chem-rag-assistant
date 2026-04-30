@@ -1,0 +1,26 @@
+# Extracción de PDFs
+docling>=2.0.0
+
+# Embeddings
+FlagEmbedding>=1.2.0
+sentence-transformers>=3.0.0
+
+# Pipeline RAG y chunking
+langchain>=0.2.0
+langchain-text-splitters>=0.2.0
+
+# Base de datos vectorial
+chromadb>=0.5.0
+
+# API REST
+fastapi>=0.110.0
+uvicorn>=0.29.0
+
+# Modelos de datos
+pydantic>=2.0.0
+
+# Configuración
+pyyaml>=6.0
+
+# Variables de entorno
+python-dotenv>=1.0.0
