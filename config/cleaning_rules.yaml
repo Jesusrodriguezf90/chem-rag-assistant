@@ -9,5 +9,10 @@ PMC10967698:
     - "RSC Advances"
     - "## PAPER"
     - "rsc.li/rsc-advances"
+    - "Cite this:.*"
+    - "Received.*"
+    - "Accepted.*"
+    - "DOI:.*"
   remove_affiliations: true
   fix_ocr_errors: true
+  remove_references_section: true
