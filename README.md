@@ -34,7 +34,7 @@ El pipeline completo está containerizado con Docker y diseñado para desplegars
 > Las funcionalidades marcadas con 🔲 están especificadas y pendientes de implementación.
 
 - ✅ Estructura del proyecto y documentación
-- 🔲 Ingesta de PDFs científicos vía endpoint REST (`POST /upload`)
+- ✅ Ingesta de PDFs científicos vía endpoint REST (`POST /upload`)
 - 🔲 Extracción estructurada de texto, tablas y fórmulas químicas mediante Docling
 - 🔲 Indexación semántica con embeddings BGE-M3
 - 🔲 Búsqueda por similitud sobre base de datos vectorial ChromaDB
