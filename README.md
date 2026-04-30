@@ -33,12 +33,13 @@ El pipeline completo está containerizado con Docker y diseñado para desplegars
 
 > Las funcionalidades marcadas con 🔲 están especificadas y pendientes de implementación.
 
-- ✅ Estructura del proyecto y documentación
-- ✅ Ingesta de PDFs científicos vía endpoint REST (`POST /upload`)
-- 🔲 Extracción estructurada de texto, tablas y fórmulas químicas mediante Docling
-- 🔲 Indexación semántica con embeddings BGE-M3
-- 🔲 Búsqueda por similitud sobre base de datos vectorial ChromaDB
+- ✅ Extracción estructurada de texto y contenido científico mediante Docling
+- ✅ Limpieza y preprocesamiento configurable por documento (universal + específica por YAML)
+- ✅ Indexación semántica con embeddings BGE-M3
+- ✅ Búsqueda por similitud sobre base de datos vectorial ChromaDB
+- ✅ Evaluación de recuperación con preguntas de complejidad progresiva y ground truth
 - 🔲 Generación de respuestas en lenguaje natural mediante Qwen3 (HF Inference API)
+- 🔲 Ingesta de PDFs científicos vía endpoint REST (`POST /upload`)
 - 🔲 Documentación interactiva automática con Swagger UI (`/docs`) y ReDoc (`/redoc`)
 - 🔲 Containerización completa con Docker
 - 🔲 Despliegue en Hugging Face Spaces (Docker SDK)
@@ -277,10 +278,10 @@ La API quedará accesible en:
 |---|---|
 | ✅ | Estructura del proyecto y documentación |
 | ✅ | Configuración inicial del entorno (notebook 00_setup) |
-| ✅ | Prototipo de ingesta con Docling (notebook) |
-| ✅ | Pipeline de embeddings con BGE-M3 (notebook) |
-| ✅ | Integración con ChromaDB y evaluación de recuperación (notebook) |
-| 🔲 | Pipeline RAG completo con LangChain (notebook) |
+| ✅ | Prototipo de ingesta con Docling y limpieza configurable por documento (notebook) |
+| ✅ | Pipeline de embeddings con BGE-M3 y fusión de chunks (notebook) |
+| ✅ | Integración con ChromaDB y evaluación de recuperación con ground truth (notebook) |
+| 🔲 | Pipeline RAG completo con Qwen3 — generación de respuestas (notebook) |
 | 🔲 | Implementación de la API REST con FastAPI |
 | 🔲 | Modelos Pydantic y validación de esquemas |
 | 🔲 | Tests unitarios e integración |
