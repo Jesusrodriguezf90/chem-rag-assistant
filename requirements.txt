@@ -27,3 +27,6 @@ pyyaml>=6.0
 
 # Variables de entorno
 python-dotenv>=1.0.0
+
+# Cliente HF Inference API
+huggingface_hub>=0.23.0
