@@ -217,9 +217,17 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+# Datos generados — excluidos del repositorio, solo se versiona la estructura
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/embeddings/*
+!data/embeddings/.gitkeep
+data/chroma_db/*
+!data/chroma_db/.gitkeep
+
 .env
-data/raw/
-chroma_db/
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
