@@ -39,6 +39,7 @@ El pipeline completo está containerizado con Docker y diseñado para desplegars
 - ✅ Búsqueda por similitud sobre base de datos vectorial ChromaDB
 - ✅ Evaluación de recuperación con preguntas de complejidad progresiva y ground truth
 - ✅ Generación de respuestas en lenguaje natural mediante Qwen3 (HF Inference API)
+- ✅ Evaluación comparativa de 4 estrategias de chunking con métricas cuantitativas
 - 🔲 Ingesta de PDFs científicos vía endpoint REST (`POST /upload`)
 - 🔲 Documentación interactiva automática con Swagger UI (`/docs`) y ReDoc (`/redoc`)
 - 🔲 Containerización completa con Docker
@@ -113,14 +114,21 @@ chem-rag-assistant/
 │
 ├── data/
 │   ├── raw/                    # PDFs de entrada (excluidos de Git)
-│   ├── processed/              # Documentos extraídos y limpios (excluidos de Git)
+│   ├── processed/              # Documento extraído y limpio (excluido de Git)
+│   │   └── PMC10967698_extracted.md
 │   ├── embeddings/             # Vectores y chunks generados (excluidos de Git)
-│   └── chroma_db/              # Base de datos vectorial ChromaDB (excluida de Git)
+│   │   ├── PMC10967698_embeddings.npy
+│   │   └── PMC10967698_chunks.json
+│   ├── chroma_db/              # Base de datos vectorial ChromaDB (excluida de Git)
+│   ├── eval/                   # Resultados de evaluación comparativa (excluidos de Git)
+│   │   └── chunking_eval_results.json
+│   └── chroma_eval/            # Colecciones ChromaDB temporales de evaluación (excluidas de Git)
 │
 ├── notebooks/
 │   ├── 00_setup.ipynb          # Configuración inicial del entorno (ejecutar una vez)
 │   ├── 01_ingesta.ipynb        # Prototipo: carga y troceado de PDFs
 │   ├── 02_embeddings.ipynb     # Prototipo: generación e indexación de embeddings
+│   ├── 02b_chunking_eval.ipynb # Evaluación comparativa de estrategias de chunking
 │   ├── 03_recuperacion.ipynb   # Prototipo: pipeline de recuperación
 │   └── 04_generacion.ipynb     # Prototipo: pipeline RAG completo con Qwen3
 │
@@ -285,6 +293,7 @@ La API quedará accesible en:
 | ✅ | Pipeline de embeddings con BGE-M3 y fusión de chunks (notebook) |
 | ✅ | Integración con ChromaDB y evaluación de recuperación con ground truth (notebook) |
 | ✅ | Pipeline RAG completo con Qwen3 — generación de respuestas (notebook) |
+| ✅ | Evaluación comparativa de estrategias de chunking (notebook 02b) |
 | 🔲 | Implementación de la API REST con FastAPI |
 | 🔲 | Modelos Pydantic y validación de esquemas |
 | 🔲 | Tests unitarios e integración |

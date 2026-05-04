@@ -226,6 +226,10 @@ data/embeddings/*
 !data/embeddings/.gitkeep
 data/chroma_db/*
 !data/chroma_db/.gitkeep
+data/eval/*
+!data/eval/.gitkeep
+data/chroma_eval/*
+!data/chroma_eval/.gitkeep
 
 .env
 __pycache__/

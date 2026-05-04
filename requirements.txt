@@ -8,6 +8,8 @@ sentence-transformers>=3.0.0
 # Pipeline RAG y chunking
 langchain>=0.2.0
 langchain-text-splitters>=0.2.0
+langchain-experimental>=0.0.60
+langchain-huggingface>=0.0.6
 
 # Base de datos vectorial
 chromadb>=0.5.0
