@@ -42,7 +42,7 @@ El pipeline completo está containerizado con Docker y diseñado para desplegars
 - ✅ Evaluación comparativa de 4 estrategias de chunking con métricas cuantitativas
 - ✅ Implementación de Contextual Chunk Headers como estrategia óptima de chunking
 - ✅ Pipeline RAG orquestado como módulos Python reutilizables (src/)
-- 🔲 Ingesta de PDFs científicos vía endpoint REST (`POST /upload`)
+- 🔲 Ingesta de PDFs científicos vía endpoint REST (`POST /upload`) — implementado, pendiente de validación
 - 🔲 Documentación interactiva automática con Swagger UI (`/docs`) y ReDoc (`/redoc`)
 - 🔲 Containerización completa con Docker
 - 🔲 Despliegue en Hugging Face Spaces (Docker SDK)
@@ -151,6 +151,7 @@ chem-rag-assistant/
 │
 ├── app/
 │   ├── main.py                 # Punto de entrada FastAPI
+│   ├── state.py                # Estado compartido de la aplicación (Singleton)
 │   ├── routers/
 │   │   ├── __init__.py
 │   │   ├── ingestion.py        # Endpoint POST /upload
@@ -305,7 +306,7 @@ La API quedará accesible en:
 | ✅ | Pipeline RAG completo con Qwen3 — generación de respuestas (notebook) |
 | ✅ | Evaluación comparativa de estrategias de chunking (notebook 02b) |
 | ✅ | Migración del pipeline RAG a módulos Python en src/ con tests unitarios |
-| 🔲 | Implementación de la API REST con FastAPI |
+| 🔲 | Implementación de la API REST con FastAPI — implementada, pendiente de validación completa |
 | 🔲 | Modelos Pydantic y validación de esquemas |
 | 🔲 | Containerización con Docker |
 | 🔲 | Despliegue en Hugging Face Spaces (Docker SDK) |

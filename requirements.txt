@@ -36,3 +36,6 @@ python-dotenv>=1.0.0
 
 # Cliente HF Inference API
 huggingface_hub>=0.23.0
+
+# Subida de archivos (requerido por FastAPI para UploadFile)
+python-multipart>=0.0.18
