@@ -10,12 +10,16 @@ langchain>=0.2.0
 langchain-text-splitters>=0.2.0
 langchain-experimental>=0.0.60
 langchain-huggingface>=0.0.6
+langchain-community>=0.2.0
 
 # Base de datos vectorial
 chromadb>=0.5.0
 
 # Matemáticas y arrays
 numpy>=1.26.0
+
+# Deep learning
+torch>=2.0.0
 
 # API REST
 fastapi>=0.110.0
