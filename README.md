@@ -41,6 +41,7 @@ El pipeline completo está containerizado con Docker y diseñado para desplegars
 - ✅ Generación de respuestas en lenguaje natural mediante Qwen3 (HF Inference API)
 - ✅ Evaluación comparativa de 4 estrategias de chunking con métricas cuantitativas
 - ✅ Implementación de Contextual Chunk Headers como estrategia óptima de chunking
+- ✅ Pipeline RAG orquestado como módulos Python reutilizables (src/)
 - 🔲 Ingesta de PDFs científicos vía endpoint REST (`POST /upload`)
 - 🔲 Documentación interactiva automática con Swagger UI (`/docs`) y ReDoc (`/redoc`)
 - 🔲 Containerización completa con Docker
@@ -303,14 +304,13 @@ La API quedará accesible en:
 | ✅ | Integración con ChromaDB y evaluación de recuperación con ground truth (notebook) |
 | ✅ | Pipeline RAG completo con Qwen3 — generación de respuestas (notebook) |
 | ✅ | Evaluación comparativa de estrategias de chunking (notebook 02b) |
+| ✅ | Migración del pipeline RAG a módulos Python en src/ con tests unitarios |
 | 🔲 | Implementación de la API REST con FastAPI |
 | 🔲 | Modelos Pydantic y validación de esquemas |
-| ✅ | Tests unitarios de ingesta, chunking, embeddings y recuperación |
 | 🔲 | Containerización con Docker |
 | 🔲 | Despliegue en Hugging Face Spaces (Docker SDK) |
 | 🔲 | Extracción específica de fórmulas y compuestos químicos |
 | 🔲 | Soporte multi-documento |
-
 ---
 
 ## Licencia
