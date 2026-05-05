@@ -152,13 +152,12 @@ class TestCargaConfig:
     def test_config_por_defecto_existe(self):
         assert DEFAULT_CONFIG_PATH.name == "cleaning_rules.yaml"
 
-
 # ---------------------------------------------------------------------------
 # Tests de manejo de errores
 # ---------------------------------------------------------------------------
 
 class TestManejoErrores:
-    """Tests para el manejo de errores en el método load."""
+    """Tests para el manejo de errores y comportamiento completo del método load."""
 
     def test_pdf_no_encontrado_lanza_error(self, loader_sin_config):
         with pytest.raises(FileNotFoundError):
@@ -175,3 +174,22 @@ class TestManejoErrores:
         ):
             with pytest.raises(ValueError):
                 loader_sin_config.load(Path(pdf_temp.name))
+
+    def test_load_aplica_limpieza_completa(self, loader_con_config):
+        """Verifica que load() aplica tanto limpieza universal como específica."""
+        mock_resultado = MagicMock()
+        mock_resultado.document.export_to_markdown.return_value = (
+            "<!-- image -->\n\nPATRON_TEST\n\n## Introducción\n\nContenido válido."
+        )
+        ruta_pdf = Path(tempfile.gettempdir()) / "documento_test.pdf"
+        ruta_pdf.touch()
+        try:
+            with patch.object(
+                loader_con_config.converter, "convert", return_value=mock_resultado
+            ):
+                resultado = loader_con_config.load(ruta_pdf)
+                assert "<!-- image -->" not in resultado
+                assert "PATRON_TEST" not in resultado
+                assert "Contenido válido" in resultado
+        finally:
+            ruta_pdf.unlink()

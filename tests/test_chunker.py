@@ -181,3 +181,13 @@ class TestConfiguracion:
         resultado_pequeno  = chunker_chunks_pequenos.split(documento_simple)
         # Chunk size más pequeño debe producir más chunks o igual
         assert len(resultado_pequeno) >= len(resultado_grande)
+
+    def test_chunks_respetan_limite_tokens_bge_m3(self, chunker_defecto, documento_simple):
+        """Verifica que ningún chunk supera el límite de 8192 tokens de BGE-M3.
+        Aproximación: 1 token ≈ 4 caracteres en inglés."""
+        LIMITE_TOKENS_BGE_M3 = 8192
+        CHARS_POR_TOKEN      = 4
+        limite_chars         = LIMITE_TOKENS_BGE_M3 * CHARS_POR_TOKEN
+
+        resultado = chunker_defecto.split(documento_simple)
+        assert all(len(chunk) <= limite_chars for chunk in resultado)
