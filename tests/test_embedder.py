@@ -28,11 +28,7 @@ from unittest.mock import MagicMock, patch
 import numpy as np
 import pytest
 
-from src.embeddings.embedder import (
-    EMBEDDING_DIMENSION,
-    DocumentEmbedder,
-    EmbedderConfig,
-)
+from src.embeddings import DocumentEmbedder, EmbedderConfig, EMBEDDING_DIMENSION
 
 # ---------------------------------------------------------------------------
 # Fixtures

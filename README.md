@@ -159,8 +159,10 @@ chem-rag-assistant/
 │       └── models.py           # Modelos Pydantic (request/response)
 │
 ├── tests/
-│   ├── test_ingestion.py       # Tests del pipeline de ingesta
-│   └── test_query.py           # Tests del endpoint de consulta
+│   ├── test_loader.py          # Tests unitarios de DocumentLoader
+│   ├── test_chunker.py         # Tests unitarios de DocumentChunker
+│   ├── test_embedder.py        # Tests unitarios de DocumentEmbedder
+│   └── test_vector_store.py    # Tests unitarios de VectorStore
 │
 ├── Dockerfile                  # Definición del contenedor
 ├── .dockerignore               # Archivos excluidos del contenedor
@@ -303,7 +305,7 @@ La API quedará accesible en:
 | ✅ | Evaluación comparativa de estrategias de chunking (notebook 02b) |
 | 🔲 | Implementación de la API REST con FastAPI |
 | 🔲 | Modelos Pydantic y validación de esquemas |
-| 🔲 | Tests unitarios e integración |
+| ✅ | Tests unitarios de ingesta, chunking, embeddings y recuperación |
 | 🔲 | Containerización con Docker |
 | 🔲 | Despliegue en Hugging Face Spaces (Docker SDK) |
 | 🔲 | Extracción específica de fórmulas y compuestos químicos |
