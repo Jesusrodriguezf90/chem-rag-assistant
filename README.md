@@ -40,6 +40,7 @@ El pipeline completo está containerizado con Docker y diseñado para desplegars
 - ✅ Evaluación de recuperación con preguntas de complejidad progresiva y ground truth
 - ✅ Generación de respuestas en lenguaje natural mediante Qwen3 (HF Inference API)
 - ✅ Evaluación comparativa de 4 estrategias de chunking con métricas cuantitativas
+- ✅ Implementación de Contextual Chunk Headers como estrategia óptima de chunking
 - 🔲 Ingesta de PDFs científicos vía endpoint REST (`POST /upload`)
 - 🔲 Documentación interactiva automática con Swagger UI (`/docs`) y ReDoc (`/redoc`)
 - 🔲 Containerización completa con Docker
@@ -175,6 +176,12 @@ chem-rag-assistant/
 
 > 🔲 **Esta sección se completará conforme avance la implementación.** Las instrucciones siguientes reflejan el comportamiento objetivo del sistema una vez finalizado.
 
+### En Google Colab (prototipado)
+
+1. Abre [Google Colab](https://colab.research.google.com/)
+2. Monta tu Google Drive y clona este repositorio
+3. Ejecuta los notebooks en orden: `00_setup` → `01_ingesta` → `02_embeddings` → `03_recuperacion` → `04_generacion`
+
 ### Requisitos previos
 
 - Python 3.10+
@@ -290,7 +297,7 @@ La API quedará accesible en:
 | ✅ | Estructura del proyecto y documentación |
 | ✅ | Configuración inicial del entorno (notebook 00_setup) |
 | ✅ | Prototipo de ingesta con Docling y limpieza configurable por documento (notebook) |
-| ✅ | Pipeline de embeddings con BGE-M3 y fusión de chunks (notebook) |
+| ✅ | Pipeline de embeddings con BGE-M3, fusión de chunks y Contextual Chunk Headers (notebook) |
 | ✅ | Integración con ChromaDB y evaluación de recuperación con ground truth (notebook) |
 | ✅ | Pipeline RAG completo con Qwen3 — generación de respuestas (notebook) |
 | ✅ | Evaluación comparativa de estrategias de chunking (notebook 02b) |
