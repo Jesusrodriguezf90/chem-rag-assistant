@@ -10,7 +10,7 @@ Cubre:
     - Carga de configuración YAML
 
 Autor:   Jesús Rodríguez
-Versión: 1.0.0
+Versión: 1.1.0
 """
 
 import re
@@ -21,7 +21,8 @@ from unittest.mock import MagicMock, patch
 import pytest
 import yaml
 
-from src.ingestion.loader import DEFAULT_CONFIG_PATH, DocumentLoader
+from src.ingestion import DocumentLoader, DEFAULT_CONFIG_PATH
+
 
 # ---------------------------------------------------------------------------
 # Fixtures
@@ -50,17 +51,27 @@ def config_yaml_temporal():
 
 @pytest.fixture
 def loader_con_config(config_yaml_temporal):
-    """Instancia DocumentLoader con configuración temporal."""
+    """Instancia DocumentLoader con configuración temporal.
+
+    Mockea Docling para compatibilidad con entornos CI/CD donde
+    la librería no está instalada — los tests de limpieza no
+    requieren el modelo real de extracción de PDFs.
+    """
     with patch("src.ingestion.loader.DOCLING_AVAILABLE", True), \
          patch("src.ingestion.loader.DocumentConverter"):
         return DocumentLoader(config_path=config_yaml_temporal)
 
 @pytest.fixture
 def loader_sin_config():
-    """Instancia DocumentLoader mockeando DocumentConverter para CI/CD."""
+    """Instancia DocumentLoader sin archivo de configuración.
+
+    Mockea Docling para compatibilidad con entornos CI/CD donde
+    la librería no está instalada.
+    """
     with patch("src.ingestion.loader.DOCLING_AVAILABLE", True), \
          patch("src.ingestion.loader.DocumentConverter"):
         return DocumentLoader(config_path=Path("ruta_inexistente.yaml"))
+
 
 # ---------------------------------------------------------------------------
 # Tests de limpieza universal
@@ -142,11 +153,17 @@ class TestCargaConfig:
     """Tests para el método _cargar_config."""
 
     def test_carga_yaml_valido(self, config_yaml_temporal):
-        loader = DocumentLoader(config_path=config_yaml_temporal)
+        # Mock de Docling para compatibilidad con CI/CD donde no está instalado
+        with patch("src.ingestion.loader.DOCLING_AVAILABLE", True), \
+             patch("src.ingestion.loader.DocumentConverter"):
+            loader = DocumentLoader(config_path=config_yaml_temporal)
         assert "documento_test" in loader._config
 
     def test_yaml_inexistente_devuelve_dict_vacio(self):
-        loader = DocumentLoader(config_path=Path("no_existe.yaml"))
+        # Mock de Docling para compatibilidad con CI/CD donde no está instalado
+        with patch("src.ingestion.loader.DOCLING_AVAILABLE", True), \
+             patch("src.ingestion.loader.DocumentConverter"):
+            loader = DocumentLoader(config_path=Path("no_existe.yaml"))
         assert loader._config == {}
 
     def test_config_por_defecto_existe(self):
