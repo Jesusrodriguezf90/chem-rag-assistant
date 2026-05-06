@@ -9,22 +9,25 @@ Responsabilidad:
     DocumentLoader → DocumentChunker → DocumentEmbedder → VectorStore.
 
     El endpoint devuelve confirmación inmediata al cliente mientras
-    el procesamiento ocurre en segundo plano mediante BackgroundTasks,
-    evitando que el cliente espere los varios minutos que requiere
-    la generación de embeddings con BGE-M3.
+    el procesamiento ocurre en segundo plano mediante BackgroundTasks
+    combinado con run_in_threadpool, evitando que las operaciones
+    CPU-intensivas (Docling, BGE-M3) bloqueen el event loop principal
+    de FastAPI e impidan atender otros requests durante la ingesta.
 
 Autor:   Jesús Rodríguez
-Versión: 1.0.0
+Versión: 1.1.0
 """
 
 import shutil
 from pathlib import Path
 
 from fastapi import APIRouter, BackgroundTasks, HTTPException, UploadFile, File
+from fastapi.concurrency import run_in_threadpool
 
 from app.schemas.models import UploadResponse, ErrorResponse
 from app.state import get_embedder, get_vector_store
 from src.ingestion import DocumentLoader, DocumentChunker
+
 
 # ---------------------------------------------------------------------------
 # Configuración del router
@@ -37,6 +40,7 @@ router = APIRouter(prefix="/upload", tags=["Ingesta"])
 DIR_RAW = Path("data/raw")
 DIR_RAW.mkdir(parents=True, exist_ok=True)
 
+
 # ---------------------------------------------------------------------------
 # Función de procesamiento en segundo plano
 # ---------------------------------------------------------------------------
@@ -44,9 +48,11 @@ DIR_RAW.mkdir(parents=True, exist_ok=True)
 def procesar_pdf(ruta_pdf: Path) -> None:
     """Procesa un PDF completo: extracción, chunking, embeddings e indexación.
 
-    Esta función se ejecuta en segundo plano tras confirmar la recepción
-    del archivo al cliente. El tiempo de ejecución puede ser de varios
-    minutos en CPU por la generación de embeddings con BGE-M3.
+    Función síncrona ejecutada en un thread separado mediante
+    run_in_threadpool para no bloquear el event loop principal de FastAPI.
+    Las operaciones Docling y BGE-M3 son CPU-intensivas y síncronas —
+    ejecutarlas directamente en BackgroundTasks bloquearía todos los
+    endpoints mientras dura la ingesta.
 
     Args:
         ruta_pdf: ruta al archivo PDF ya persistido en data/raw/.
@@ -72,9 +78,12 @@ def procesar_pdf(ruta_pdf: Path) -> None:
             fuente=ruta_pdf.stem,
         )
 
+        print(f"[OK] Procesamiento completado: {ruta_pdf.name} — {len(chunks)} chunks indexados")
+
     except Exception as e:
         # En producción: registrar en sistema de logging centralizado
         print(f"[ERROR] Procesamiento fallido para {ruta_pdf.name}: {e}")
+
 
 # ---------------------------------------------------------------------------
 # Endpoint
@@ -113,9 +122,9 @@ async def upload_pdf(
     with ruta_pdf.open("wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
-    # Lanzar el procesamiento en segundo plano
-    # El cliente recibe la respuesta inmediatamente
-    background_tasks.add_task(procesar_pdf, ruta_pdf)
+    # Lanzar el procesamiento en un thread separado mediante run_in_threadpool
+    # para que Docling y BGE-M3 no bloqueen el event loop principal de FastAPI
+    background_tasks.add_task(run_in_threadpool, procesar_pdf, ruta_pdf)
 
     return UploadResponse(
         mensaje        ="Archivo recibido. El procesamiento ha comenzado en segundo plano.",
