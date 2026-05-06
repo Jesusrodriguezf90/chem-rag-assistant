@@ -1,8 +1,20 @@
+---
+title: Chem RAG Assistant
+emoji: 🧪
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_port: 7860
+pinned: false
+license: mit
+short_description: API REST para consulta de literatura científica de química mediante RAG
+---
+
 # Chem RAG Assistant
 
 API REST inteligente para consulta de literatura científica de química mediante Generación Aumentada por Recuperación (RAG).
 
-**Proyecto en desarrollo activo.** La arquitectura y los endpoints están especificados y en proceso de implementación. Consulta la [Hoja de Ruta](#hoja-de-ruta) para conocer el estado actual de cada componente.
+**Pipeline RAG completo implementado y containerizado con Docker.** La API REST está operativa localmente y en proceso de despliegue en Hugging Face Spaces. Consulta la [Hoja de Ruta](#hoja-de-ruta) para conocer el estado actual de cada componente.
 
 ---
 
@@ -44,7 +56,7 @@ El pipeline completo está containerizado con Docker y diseñado para desplegars
 - ✅ Pipeline RAG orquestado como módulos Python reutilizables (src/)
 - ✅ Ingesta de PDFs científicos vía endpoint REST (`POST /upload`)
 - ✅ Documentación interactiva automática con Swagger UI (`/docs`) y ReDoc (`/redoc`)
-- 🔲 Containerización completa con Docker
+- ✅ Containerización completa con Docker
 - 🔲 Despliegue en Hugging Face Spaces (Docker SDK)
 
 ---
@@ -176,10 +188,6 @@ chem-rag-assistant/
 
 ---
 
-## Instalación y Puesta en Marcha
-
-> 🔲 **Esta sección se completará conforme avance la implementación.** Las instrucciones siguientes reflejan el comportamiento objetivo del sistema una vez finalizado.
-
 ### En Google Colab (prototipado)
 
 1. Abre [Google Colab](https://colab.research.google.com/)
@@ -227,8 +235,6 @@ La documentación interactiva estará disponible en `http://localhost:8000/docs`
 
 ## Endpoints de la API
 
-> 🔲 **Diseño objetivo — pendiente de implementación.**
-
 | Método | Endpoint | Descripción |
 |---|---|---|
 | `GET` | `/health` | Estado del servicio |
@@ -266,7 +272,7 @@ excluido del control de versiones mediante `.gitignore`.
 
 ## Despliegue con Docker
 
-> 🔲 **Diseño objetivo — pendiente de implementación.**
+> ✅ **Implementado y validado localmente.** En proceso de despliegue en HF Spaces.
 
 El proyecto está diseñado para desplegarse como un Docker Space en Hugging Face. El flujo de despliegue objetivo es el siguiente:
 
@@ -277,7 +283,7 @@ El proyecto está diseñado para desplegarse como un Docker Space en Hugging Fac
 docker build -t chem-rag-assistant .
 
 # Ejecutar el contenedor
-docker run -p 8000:7860 --env-file .env chem-rag-assistant
+docker run -p 7860:7860 --env-file .env chem-rag-assistant:latest
 ```
 
 ### Despliegue en Hugging Face Spaces
@@ -308,7 +314,7 @@ La API quedará accesible en:
 | ✅ | Migración del pipeline RAG a módulos Python en src/ con tests unitarios |
 | ✅ | Implementación de la API REST con FastAPI |
 | ✅ | Modelos Pydantic y validación de esquemas |
-| 🔲 | Containerización con Docker |
+| ✅ | Containerización con Docker |
 | 🔲 | Despliegue en Hugging Face Spaces (Docker SDK) |
 | 🔲 | Extracción específica de fórmulas y compuestos químicos |
 | 🔲 | Soporte multi-documento |
