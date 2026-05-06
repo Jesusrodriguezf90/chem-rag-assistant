@@ -59,6 +59,7 @@ El pipeline completo está containerizado con Docker y diseñado para desplegars
 - ✅ Documentación interactiva automática con Swagger UI (`/docs`) y ReDoc (`/redoc`)
 - ✅ Containerización completa con Docker
 - ✅ Despliegue en Hugging Face Spaces (Docker SDK)
+- ✅ Pipeline CI/CD con GitHub Actions — validación automática en cada push
 
 ---
 
@@ -320,6 +321,7 @@ La API quedará accesible en:
 | ✅ | Modelos Pydantic y validación de esquemas |
 | ✅ | Containerización con Docker |
 | ✅ | Despliegue en Hugging Face Spaces (Docker SDK) |
+| ✅ | Pipeline CI/CD con GitHub Actions — tests, Docker build y deploy automático |
 | 🔲 | Extracción específica de fórmulas y compuestos químicos |
 | 🔲 | Soporte multi-documento |
 ---
