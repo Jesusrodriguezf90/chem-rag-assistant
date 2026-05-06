@@ -123,7 +123,8 @@ El sistema sigue una arquitectura de pipeline RAG en tres fases: ingesta, recupe
 chem-rag-assistant/
 │
 ├── .github/
-│   └── workflows/              # Pipelines CI/CD (planificado)
+   └── workflows/
+│       └── ci.yml              # Pipeline CI/CD — tests, Docker build y deploy a HF Spaces
 │
 ├── config/
 │   └── cleaning_rules.yaml     # Reglas de limpieza específicas por documento
@@ -178,7 +179,8 @@ chem-rag-assistant/
 │   ├── test_loader.py          # Tests unitarios de DocumentLoader
 │   ├── test_chunker.py         # Tests unitarios de DocumentChunker
 │   ├── test_embedder.py        # Tests unitarios de DocumentEmbedder
-│   └── test_vector_store.py    # Tests unitarios de VectorStore
+│   ├── test_vector_store.py    # Tests unitarios de VectorStore
+│   └── test_rag.py             # Tests unitarios de RAGPipeline
 │
 ├── .gitattributes              # Configuración Git LFS para archivos binarios (HF Spaces)
 ├── Dockerfile                  # Definición del contenedor
