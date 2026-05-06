@@ -14,7 +14,8 @@ short_description: API RAG para consulta de literatura química
 
 API REST inteligente para consulta de literatura científica de química mediante Generación Aumentada por Recuperación (RAG).
 
-**Pipeline RAG completo implementado y containerizado con Docker.** La API REST está operativa localmente y en proceso de despliegue en Hugging Face Spaces. Consulta la [Hoja de Ruta](#hoja-de-ruta) para conocer el estado actual de cada componente.
+**Pipeline RAG completo implementado, containerizado y desplegado en Hugging Face Spaces.**
+
 
 ---
 
@@ -57,7 +58,7 @@ El pipeline completo está containerizado con Docker y diseñado para desplegars
 - ✅ Ingesta de PDFs científicos vía endpoint REST (`POST /upload`)
 - ✅ Documentación interactiva automática con Swagger UI (`/docs`) y ReDoc (`/redoc`)
 - ✅ Containerización completa con Docker
-- 🔲 Despliegue en Hugging Face Spaces (Docker SDK)
+- ✅ Despliegue en Hugging Face Spaces (Docker SDK)
 
 ---
 
@@ -178,6 +179,7 @@ chem-rag-assistant/
 │   ├── test_embedder.py        # Tests unitarios de DocumentEmbedder
 │   └── test_vector_store.py    # Tests unitarios de VectorStore
 │
+├── .gitattributes              # Configuración Git LFS para archivos binarios (HF Spaces)
 ├── Dockerfile                  # Definición del contenedor
 ├── .dockerignore               # Archivos excluidos del contenedor
 ├── .env.example                # Plantilla de variables de entorno
@@ -187,6 +189,8 @@ chem-rag-assistant/
 ```
 
 ---
+
+## Instalación y Puesta en Marcha
 
 ### En Google Colab (prototipado)
 
@@ -272,7 +276,7 @@ excluido del control de versiones mediante `.gitignore`.
 
 ## Despliegue con Docker
 
-> ✅ **Implementado y validado localmente.** En proceso de despliegue en HF Spaces.
+> ✅ **Implementado, validado localmente y desplegado en Hugging Face Spaces.**
 
 El proyecto está diseñado para desplegarse como un Docker Space en Hugging Face. El flujo de despliegue objetivo es el siguiente:
 
@@ -296,7 +300,7 @@ El Space utiliza el SDK Docker de HF Spaces. Para replicar el despliegue:
 4. Cualquier push a la rama `main` desencadena una nueva build automáticamente
 
 La API quedará accesible en:
-`https://TU_USUARIO-chem-rag-assistant.hf.space/docs`
+`https://jesusrodriguezf90-chem-rag-assistant.hf.space/docs`
 
 ---
 
@@ -315,7 +319,7 @@ La API quedará accesible en:
 | ✅ | Implementación de la API REST con FastAPI |
 | ✅ | Modelos Pydantic y validación de esquemas |
 | ✅ | Containerización con Docker |
-| 🔲 | Despliegue en Hugging Face Spaces (Docker SDK) |
+| ✅ | Despliegue en Hugging Face Spaces (Docker SDK) |
 | 🔲 | Extracción específica de fórmulas y compuestos químicos |
 | 🔲 | Soporte multi-documento |
 ---
