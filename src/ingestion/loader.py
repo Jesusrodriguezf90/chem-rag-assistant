@@ -19,7 +19,16 @@ import re
 from pathlib import Path
 
 import yaml
-from docling.document_converter import DocumentConverter
+
+# Import condicional de Docling para permitir ejecución en entornos
+# donde Docling no está instalado (CI/CD, tests unitarios).
+# En producción Docling debe estar disponible — se valida en __init__.
+try:
+    from docling.document_converter import DocumentConverter
+    DOCLING_AVAILABLE = True
+except ImportError:
+    DOCLING_AVAILABLE = False
+    DocumentConverter = None
 
 # ---------------------------------------------------------------------------
 # Constantes
@@ -58,7 +67,15 @@ class DocumentLoader:
                          relativo a la raíz del proyecto.
         """
         self.config_path = config_path
-        self.converter   = DocumentConverter()
+        # Verificar que Docling está disponible antes de instanciar
+        # Si no está instalado lanzar un error claro en lugar de fallar
+        # silenciosamente más adelante al llamar a load()
+        if not DOCLING_AVAILABLE:
+            raise ImportError(
+                "docling no está instalado. "
+                "Instálalo con: pip install docling"
+            )
+        self.converter = DocumentConverter()
         self._config     = self._cargar_config()
 
     # -----------------------------------------------------------------------
