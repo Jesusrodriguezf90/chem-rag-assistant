@@ -1,9 +1,36 @@
-.env
+# Control de versiones
 .git
 .gitignore
+
+# Entorno virtual — Docker instala dependencias desde requirements.txt
+venv/
+
+# Variables de entorno — se pasan como secretos en HF Spaces
+.env
+.env.example
+
+# Datos generados en tiempo de ejecución — no forman parte de la imagen
 data/raw/
+data/processed/
+data/embeddings/
+data/chroma_db/
+data/eval/
+data/chroma_eval/
+
+# Notebooks — solo para prototipado, no necesarios en producción
 notebooks/
+
+# Tests — no necesarios en la imagen de producción
 tests/
+
+# Caché de Python
 __pycache__/
 *.pyc
-chroma_db/
+*.pyo
+.pytest_cache/
+
+# VS Code
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/
