@@ -7,7 +7,7 @@ sdk: docker
 app_port: 7860
 pinned: false
 license: mit
-short_description: API REST para consulta de literatura científica de química mediante RAG
+short_description: API RAG para consulta de literatura química
 ---
 
 # Chem RAG Assistant
