@@ -23,7 +23,6 @@ import yaml
 
 from src.ingestion.loader import DEFAULT_CONFIG_PATH, DocumentLoader
 
-
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
@@ -52,14 +51,16 @@ def config_yaml_temporal():
 @pytest.fixture
 def loader_con_config(config_yaml_temporal):
     """Instancia DocumentLoader con configuración temporal."""
-    return DocumentLoader(config_path=config_yaml_temporal)
-
+    with patch("src.ingestion.loader.DOCLING_AVAILABLE", True), \
+         patch("src.ingestion.loader.DocumentConverter"):
+        return DocumentLoader(config_path=config_yaml_temporal)
 
 @pytest.fixture
 def loader_sin_config():
-    """Instancia DocumentLoader sin archivo de configuración."""
-    return DocumentLoader(config_path=Path("ruta_inexistente.yaml"))
-
+    """Instancia DocumentLoader mockeando DocumentConverter para CI/CD."""
+    with patch("src.ingestion.loader.DOCLING_AVAILABLE", True), \
+         patch("src.ingestion.loader.DocumentConverter"):
+        return DocumentLoader(config_path=Path("ruta_inexistente.yaml"))
 
 # ---------------------------------------------------------------------------
 # Tests de limpieza universal
@@ -97,7 +98,6 @@ class TestLimpiezaUniversal:
         resultado = loader_sin_config._limpiar_universal(texto)
         assert "Introducción" in resultado
         assert "Texto limpio sin artefactos." in resultado
-
 
 # ---------------------------------------------------------------------------
 # Tests de limpieza específica
