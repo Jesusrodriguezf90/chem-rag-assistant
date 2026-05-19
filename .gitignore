@@ -230,6 +230,8 @@ data/eval/*
 !data/eval/.gitkeep
 data/chroma_eval/*
 !data/chroma_eval/.gitkeep
+data/finetune/*
+!data/finetune/.gitkeep
 
 __pycache__/
 *.pyc

@@ -60,6 +60,8 @@ El pipeline completo está containerizado con Docker y diseñado para desplegars
 - ✅ Containerización completa con Docker
 - ✅ Despliegue en Hugging Face Spaces (Docker SDK)
 - ✅ Pipeline CI/CD con GitHub Actions — validación automática en cada push
+- ✅ Construcción del dataset de fine-tuning QA sobre química organometálica (notebook 05_dataset)
+- 🔲 Fine-tuning QLoRA de LLM especializado en química (notebook 06_finetune)
 
 ---
 
@@ -132,14 +134,11 @@ chem-rag-assistant/
 ├── data/
 │   ├── raw/                    # PDFs de entrada (excluidos de Git)
 │   ├── processed/              # Documento extraído y limpio (excluido de Git)
-│   │   └── PMC10967698_extracted.md
 │   ├── embeddings/             # Vectores y chunks generados (excluidos de Git)
-│   │   ├── PMC10967698_embeddings.npy
-│   │   └── PMC10967698_chunks.json
 │   ├── chroma_db/              # Base de datos vectorial ChromaDB (excluida de Git)
 │   ├── eval/                   # Resultados de evaluación comparativa (excluidos de Git)
-│   │   └── chunking_eval_results.json
-│   └── chroma_eval/            # Colecciones ChromaDB temporales de evaluación (excluidas de Git)
+│   ├── chroma_eval/            # Colecciones ChromaDB temporales (excluidas de Git)
+│   └── finetune/               # Dataset y artefactos de fine-tuning (excluidos de Git)
 │
 ├── notebooks/
 │   ├── 00_setup.ipynb          # Configuración inicial del entorno (ejecutar una vez)
@@ -148,6 +147,7 @@ chem-rag-assistant/
 │   ├── 02b_chunking_eval.ipynb # Evaluación comparativa de estrategias de chunking
 │   ├── 03_recuperacion.ipynb   # Prototipo: pipeline de recuperación
 │   └── 04_generacion.ipynb     # Prototipo: pipeline RAG completo con Qwen3
+│   └── 05_dataset.ipynb        # Construcción del dataset de fine-tuning QA
 │
 ├── src/
 │   ├── ingestion/
@@ -324,6 +324,8 @@ La API quedará accesible en:
 | ✅ | Containerización con Docker |
 | ✅ | Despliegue en Hugging Face Spaces (Docker SDK) |
 | ✅ | Pipeline CI/CD con GitHub Actions — tests, Docker build y deploy automático |
+| ✅ | Construcción del dataset de fine-tuning QA (notebook 05_dataset) |
+| 🔲 | Fine-tuning QLoRA del LLM especializado en química (notebook 06_finetune) |
 | 🔲 | Extracción específica de fórmulas y compuestos químicos |
 | 🔲 | Soporte multi-documento |
 ---
