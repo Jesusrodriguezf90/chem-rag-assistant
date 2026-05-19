@@ -1,17 +1,3 @@
-# ===========================================================================
-# ci.yml — Pipeline CI/CD para Chem RAG Assistant
-#
-# Se ejecuta automáticamente en cada push o pull request a main.
-#
-# Etapas:
-#   1. tests: ejecuta el suite completo de tests unitarios con pytest
-#   2. docker: verifica que la imagen Docker construye correctamente
-#   3. deploy: hace push a HF Spaces si tests y docker pasan (solo en main)
-#
-# Requisitos (configurar en GitHub → Settings → Secrets and variables):
-#   - HF_TOKEN: token de HF con permisos de escritura en Spaces
-# ===========================================================================
-
 name: CI/CD — Chem RAG Assistant
 
 on:
@@ -22,12 +8,13 @@ on:
 
 jobs:
 
-  # ---------------------------------------------------------------------------
-  # Job 1 — Tests unitarios
-  # ---------------------------------------------------------------------------
   tests:
     name: Tests unitarios
     runs-on: ubuntu-latest
+    # Forzar Node.js 24 para evitar el warning de deprecación de Node.js 20
+    # GitHub Actions eliminará Node.js 20 el 16 de septiembre de 2026
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout del repositorio
@@ -43,8 +30,6 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install pytest
-          # Instalar solo las dependencias necesarias para los tests
-          # Se excluye docling y torch para reducir el tiempo de CI
           pip install \
             langchain \
             langchain-text-splitters \
@@ -69,11 +54,6 @@ jobs:
         run: |
           pytest tests/ -v --tb=short
 
-  # ---------------------------------------------------------------------------
-  # Job 2 — Build de Docker
-  # Verifica que el Dockerfile construye sin errores
-  # Se ejecuta solo en push a main para no consumir recursos en PRs
-  # ---------------------------------------------------------------------------
   docker:
     name: Build Docker
     runs-on: ubuntu-latest
@@ -87,19 +67,29 @@ jobs:
       - name: Configurar Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      # Autenticación en GitHub Container Registry (GHCR)
+      # Permite usar GHCR como backend de caché sin límite de 10GB
+      # GITHUB_TOKEN se genera automáticamente por GitHub Actions — no requiere secreto manual
+      - name: Login a GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build de la imagen Docker
         uses: docker/build-push-action@v5
         with:
           context: .
-          push: false        # Solo verificar que construye — no subir a ningún registry
+          push: false
           tags: chem-rag-assistant:ci
-          cache-from: type=gha  # Reutilizar caché de builds anteriores
-          cache-to: type=gha,mode=max
+          # Caché en GHCR en lugar del GHA cache (límite 10GB)
+          # La imagen pesa ~9.78GB — el GHA cache se eviccionaría constantemente
+          # Con GHCR solo se reconstruyen las capas que hayan cambiado
+          # Primera build: ~29 min. Builds posteriores sin cambios en dependencias: ~3-5 min
+          cache-from: type=registry,ref=ghcr.io/jesusrodriguezf90/chem-rag-assistant:cache
+          cache-to: type=registry,ref=ghcr.io/jesusrodriguezf90/chem-rag-assistant:cache,mode=max
 
-  # ---------------------------------------------------------------------------
-  # Job 3 — Despliegue a HF Spaces
-  # Solo se ejecuta si tests y docker pasan, y solo en push a main
-  # ---------------------------------------------------------------------------
   deploy:
     name: Deploy a HF Spaces
     runs-on: ubuntu-latest
@@ -110,7 +100,7 @@ jobs:
       - name: Checkout del repositorio
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0    # Necesario para push con historial completo
+          fetch-depth: 0
 
       - name: Configurar Git
         run: |
