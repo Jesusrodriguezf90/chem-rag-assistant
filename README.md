@@ -61,7 +61,8 @@ El pipeline completo está containerizado con Docker y diseñado para desplegars
 - ✅ Despliegue en Hugging Face Spaces (Docker SDK)
 - ✅ Pipeline CI/CD con GitHub Actions — validación automática en cada push
 - ✅ Construcción del dataset de fine-tuning QA sobre química organometálica (notebook 05_dataset)
-- 🔲 Fine-tuning QLoRA de LLM especializado en química (notebook 06_finetune)
+- ✅ Fine-tuning QLoRA de LLM especializado en química — Qwen2.5-1.5B publicado en HF Hub (notebook 06_finetune)
+- 🔲 Evaluación comparativa base vs fine-tuned (notebook 06b_evaluacion)
 
 ---
 
@@ -146,8 +147,9 @@ chem-rag-assistant/
 │   ├── 02_embeddings.ipynb     # Prototipo: generación e indexación de embeddings
 │   ├── 02b_chunking_eval.ipynb # Evaluación comparativa de estrategias de chunking
 │   ├── 03_recuperacion.ipynb   # Prototipo: pipeline de recuperación
-│   └── 04_generacion.ipynb     # Prototipo: pipeline RAG completo con Qwen3
-│   └── 05_dataset.ipynb        # Construcción del dataset de fine-tuning QA
+│   ├── 04_generacion.ipynb     # Prototipo: pipeline RAG completo con Qwen3
+│   ├── 05_dataset.ipynb        # Construcción del dataset de fine-tuning QA
+│   └── 06_finetune.ipynb       # Fine-tuning QLoRA — Qwen2.5-1.5B en química organometálica
 │
 ├── src/
 │   ├── ingestion/
@@ -325,7 +327,8 @@ La API quedará accesible en:
 | ✅ | Despliegue en Hugging Face Spaces (Docker SDK) |
 | ✅ | Pipeline CI/CD con GitHub Actions — tests, Docker build y deploy automático |
 | ✅ | Construcción del dataset de fine-tuning QA (notebook 05_dataset) |
-| 🔲 | Fine-tuning QLoRA del LLM especializado en química (notebook 06_finetune) |
+| ✅ | Fine-tuning QLoRA del LLM especializado en química (notebook 06_finetune) |
+| 🔲 | Evaluación comparativa base vs fine-tuned (notebook 06b_evaluacion) |
 | 🔲 | Extracción específica de fórmulas y compuestos químicos |
 | 🔲 | Soporte multi-documento |
 ---
