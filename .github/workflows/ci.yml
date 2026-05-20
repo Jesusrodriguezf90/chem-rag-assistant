@@ -54,16 +54,16 @@ jobs:
         run: |
           pytest tests/ -v --tb=short
 
-docker:
-  name: Build Docker
-  runs-on: ubuntu-latest
-  needs: tests
-  if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-  # Permisos necesarios para escribir en GHCR con GITHUB_TOKEN
-  # Sin esto el token por defecto solo tiene permisos de lectura
-  permissions:
-    contents: read
-    packages: write
+  docker:
+    name: Build Docker
+    runs-on: ubuntu-latest
+    needs: tests
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # Permisos necesarios para escribir en GHCR con GITHUB_TOKEN
+    # Sin esto el token por defecto solo tiene permisos de lectura
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - name: Checkout del repositorio
