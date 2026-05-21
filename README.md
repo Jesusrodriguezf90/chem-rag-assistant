@@ -14,7 +14,7 @@ short_description: API RAG para consulta de literatura química
 
 API REST inteligente para consulta de literatura científica de química mediante Generación Aumentada por Recuperación (RAG).
 
-**Pipeline RAG completo implementado, containerizado y desplegado en Hugging Face Spaces.**
+**Pipeline RAG completo con fine-tuning QLoRA — implementado, evaluado, containerizado y desplegado en Hugging Face Spaces.**
 
 
 ---
@@ -62,7 +62,7 @@ El pipeline completo está containerizado con Docker y diseñado para desplegars
 - ✅ Pipeline CI/CD con GitHub Actions — validación automática en cada push
 - ✅ Construcción del dataset de fine-tuning QA sobre química organometálica (notebook 05_dataset)
 - ✅ Fine-tuning QLoRA de LLM especializado en química — Qwen2.5-1.5B publicado en HF Hub (notebook 06_finetune)
-- 🔲 Evaluación comparativa base vs fine-tuned (notebook 06b_evaluacion)
+- ✅ Evaluación comparativa base vs fine-tuned vs RAG con análisis crítico de resultados (notebook 06b_evaluacion)
 
 ---
 
@@ -117,6 +117,10 @@ El sistema sigue una arquitectura de pipeline RAG en tres fases: ingesta, recupe
 | Contenedor | [Docker](https://www.docker.com/) | Empaquetado y despliegue reproducible |
 | Despliegue | [Hugging Face Spaces (Docker SDK)](https://huggingface.co/docs/hub/spaces-sdks-docker) | Hosting gratuito en la nube |
 | Desarrollo | [Google Colab](https://colab.research.google.com/) | Prototipado y experimentación con notebooks |
+| Fine-tuning | [PEFT/LoRA](https://github.com/huggingface/peft) | Adaptadores QLoRA eficientes en memoria |
+| Fine-tuning | [TRL](https://github.com/huggingface/trl) | SFTTrainer para supervisión del entrenamiento |
+| Fine-tuning | [BitsAndBytes](https://github.com/TimDettmers/bitsandbytes) | Quantización 4-bit NF4 |
+| Desarrollo | [Kaggle Notebooks](https://www.kaggle.com/code) | Alternativa gratuita a Colab con GPU T4 |
 
 ---
 
@@ -149,7 +153,8 @@ chem-rag-assistant/
 │   ├── 03_recuperacion.ipynb   # Prototipo: pipeline de recuperación
 │   ├── 04_generacion.ipynb     # Prototipo: pipeline RAG completo con Qwen3
 │   ├── 05_dataset.ipynb        # Construcción del dataset de fine-tuning QA
-│   └── 06_finetune.ipynb       # Fine-tuning QLoRA — Qwen2.5-1.5B en química organometálica
+│   ├── 06_finetune.ipynb       # Fine-tuning QLoRA — Qwen2.5-1.5B en química organometálica
+│   └── 06b_evaluacion.ipynb    # Evaluación comparativa base vs fine-tuned vs RAG (Colab/Kaggle)
 │
 ├── src/
 │   ├── ingestion/
@@ -328,7 +333,7 @@ La API quedará accesible en:
 | ✅ | Pipeline CI/CD con GitHub Actions — tests, Docker build y deploy automático |
 | ✅ | Construcción del dataset de fine-tuning QA (notebook 05_dataset) |
 | ✅ | Fine-tuning QLoRA del LLM especializado en química (notebook 06_finetune) |
-| 🔲 | Evaluación comparativa base vs fine-tuned (notebook 06b_evaluacion) |
+| ✅ | Evaluación comparativa base vs fine-tuned vs RAG (notebook 06b_evaluacion) |
 | 🔲 | Extracción específica de fórmulas y compuestos químicos |
 | 🔲 | Soporte multi-documento |
 ---

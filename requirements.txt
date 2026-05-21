@@ -39,3 +39,11 @@ huggingface_hub>=0.23.0
 
 # Subida de archivos (requerido por FastAPI para UploadFile)
 python-multipart>=0.0.18
+
+# Fine-tuning QLoRA
+transformers>=4.40.0
+peft>=0.10.0
+trl>=0.8.0
+bitsandbytes>=0.43.0
+datasets>=2.19.0
+accelerate>=0.29.0
