@@ -47,3 +47,7 @@ trl>=0.8.0
 bitsandbytes>=0.43.0
 datasets>=2.19.0
 accelerate>=0.29.0
+
+# Agente LangGraph
+langgraph>=0.2.0
+langchain-core>=0.2.0
