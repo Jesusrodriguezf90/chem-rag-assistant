@@ -63,6 +63,7 @@ El pipeline completo está containerizado con Docker y diseñado para desplegars
 - ✅ Construcción del dataset de fine-tuning QA sobre química organometálica (notebook 05_dataset)
 - ✅ Fine-tuning QLoRA de LLM especializado en química — Qwen2.5-1.5B publicado en HF Hub (notebook 06_finetune)
 - ✅ Evaluación comparativa base vs fine-tuned vs RAG con análisis crítico de resultados (notebook 06b_evaluacion)
+- ✅ Agente RAG con LangGraph — Adaptive RAG con Router, Grader y Rewriter (notebook 07_agente)
 
 ---
 
@@ -121,6 +122,8 @@ El sistema sigue una arquitectura de pipeline RAG en tres fases: ingesta, recupe
 | Fine-tuning | [TRL](https://github.com/huggingface/trl) | SFTTrainer para supervisión del entrenamiento |
 | Fine-tuning | [BitsAndBytes](https://github.com/TimDettmers/bitsandbytes) | Quantización 4-bit NF4 |
 | Desarrollo | [Kaggle Notebooks](https://www.kaggle.com/code) | Alternativa gratuita a Colab con GPU T4 |
+| Agente | [LangGraph](https://github.com/langchain-ai/langgraph) | Orquestación del grafo de agentes con estado persistente |
+| Agente | [LangChain Core](https://github.com/langchain-ai/langchain) | Contratos base de mensajes y prompts |
 
 ---
 
@@ -154,7 +157,8 @@ chem-rag-assistant/
 │   ├── 04_generacion.ipynb     # Prototipo: pipeline RAG completo con Qwen3
 │   ├── 05_dataset.ipynb        # Construcción del dataset de fine-tuning QA
 │   ├── 06_finetune.ipynb       # Fine-tuning QLoRA — Qwen2.5-1.5B en química organometálica
-│   └── 06b_evaluacion.ipynb    # Evaluación comparativa base vs fine-tuned vs RAG (Colab/Kaggle)
+│   ├── 06b_evaluacion.ipynb    # Evaluación comparativa base vs fine-tuned vs RAG (Colab/Kaggle)
+│   └── 07_agente.ipynb         # Agente RAG con LangGraph — Router, Grader, Rewriter, Generator
 │
 ├── src/
 │   ├── ingestion/
@@ -334,6 +338,7 @@ La API quedará accesible en:
 | ✅ | Construcción del dataset de fine-tuning QA (notebook 05_dataset) |
 | ✅ | Fine-tuning QLoRA del LLM especializado en química (notebook 06_finetune) |
 | ✅ | Evaluación comparativa base vs fine-tuned vs RAG (notebook 06b_evaluacion) |
+| ✅ | Agente LangGraph sobre pipeline RAG — Adaptive RAG con self-correction |
 | 🔲 | Extracción específica de fórmulas y compuestos químicos |
 | 🔲 | Soporte multi-documento |
 ---
