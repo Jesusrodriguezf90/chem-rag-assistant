@@ -66,6 +66,21 @@ jobs:
       packages: write
 
     steps:
+      # El runner parte con ~50 GB ocupados de 72 GB — insuficiente para una imagen de ~9.78 GB
+      # Elimina SDKs preinstalados que no usa este proyecto (Python/ML puro): libera ~20 GB
+      # tool-cache: false — las GitHub Actions internas del runner lo necesitan
+      # swap-storage: false — Docker build puede necesitarlo con imágenes grandes
+      - name: Liberar espacio en disco
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: false
+
       - name: Checkout del repositorio
         uses: actions/checkout@v4
 
