@@ -133,7 +133,7 @@ El sistema sigue una arquitectura de pipeline RAG en tres fases: ingesta, recupe
 chem-rag-assistant/
 │
 ├── .github/
-   └── workflows/
+│   └── workflows/
 │       └── ci.yml              # Pipeline CI/CD — tests, Docker build y deploy a HF Spaces
 │
 ├── config/
@@ -198,6 +198,10 @@ chem-rag-assistant/
 │   ├── test_rag.py             # Tests unitarios de RAGPipeline
 │   └── test_agent.py           # Tests unitarios de AgentGraph
 │
+├── scripts/
+│   └── upload_artifacts.py     # Sube los artefactos RAG a HF Hub para el Space Gradio
+│
+├── .gitattributes
 ├── .gitattributes              # Configuración Git LFS para archivos binarios (HF Spaces)
 ├── Dockerfile                  # Definición del contenedor
 ├── .dockerignore               # Archivos excluidos del contenedor
