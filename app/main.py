@@ -7,13 +7,14 @@ Responsabilidad:
     Inicializar la aplicación FastAPI, registrar los routers de ingesta
     y consulta, gestionar el ciclo de vida del servidor (startup/shutdown)
     y exponer el endpoint de salud.
-
+    Registra el router del agente RAG LangGraph (POST /agent/query).
+    
     Usa el patrón lifespan de FastAPI (recomendado desde v0.93) en lugar
     de los eventos on_event deprecated para gestionar la inicialización
     y limpieza de recursos.
 
 Autor:   Jesús Rodríguez
-Versión: 1.0.0
+Versión: 1.1.0
 """
 
 from contextlib import asynccontextmanager
@@ -21,7 +22,7 @@ from pathlib import Path
 
 from fastapi import FastAPI
 
-from app.routers import ingestion, query
+from app.routers import ingestion, query, agent
 from app.schemas.models import HealthResponse
 from app.state import get_embedder, get_vector_store, inicializar_estado
 from src.embeddings import EMBEDDING_DIMENSION
@@ -65,9 +66,11 @@ app = FastAPI(
         "API REST para consulta de literatura científica de química "
         "organometálica mediante Generación Aumentada por Recuperación (RAG). "
         "Procesa PDFs científicos, los indexa semánticamente con BGE-M3 "
-        "y genera respuestas fundamentadas con Qwen3."
+        "y genera respuestas fundamentadas con Qwen3. "
+        "Incluye agente RAG adaptativo con LangGraph "
+        "(Adaptive RAG + Corrective RAG)."
     ),
-    version="0.1.0",
+    version="0.2.0",
     lifespan=lifespan,
     docs_url="/docs",
     redoc_url="/redoc",
@@ -79,6 +82,7 @@ app = FastAPI(
 
 app.include_router(ingestion.router)
 app.include_router(query.router)
+app.include_router(agent.router)
 
 # ---------------------------------------------------------------------------
 # Endpoints de salud

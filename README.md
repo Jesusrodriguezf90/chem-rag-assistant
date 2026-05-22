@@ -171,9 +171,12 @@ chem-rag-assistant/
 │   ├── retrieval/
 │   │   ├── __init__.py
 │   │   └── vector_store.py     # Interfaz con ChromaDB
-│   └── pipeline/
+│   ├── pipeline/
+│   │   ├── __init__.py
+│   │   └── rag.py              # Orquestación RAG con LangChain
+│   └── agent/
 │       ├── __init__.py
-│       └── rag.py              # Orquestación RAG con LangChain
+│       └── graph.py            # Agente RAG con LangGraph — Adaptive RAG + Corrective RAG
 │
 ├── app/
 │   ├── main.py                 # Punto de entrada FastAPI
@@ -181,7 +184,8 @@ chem-rag-assistant/
 │   ├── routers/
 │   │   ├── __init__.py
 │   │   ├── ingestion.py        # Endpoint POST /upload
-│   │   └── query.py            # Endpoint POST /query
+│   │   ├── query.py            # Endpoint POST /query
+│   │   └── agent.py            # Endpoint POST /agent/query
 │   └── schemas/
 │       ├── __init__.py
 │       └── models.py           # Modelos Pydantic (request/response)
@@ -191,7 +195,8 @@ chem-rag-assistant/
 │   ├── test_chunker.py         # Tests unitarios de DocumentChunker
 │   ├── test_embedder.py        # Tests unitarios de DocumentEmbedder
 │   ├── test_vector_store.py    # Tests unitarios de VectorStore
-│   └── test_rag.py             # Tests unitarios de RAGPipeline
+│   ├── test_rag.py             # Tests unitarios de RAGPipeline
+│   └── test_agent.py           # Tests unitarios de AgentGraph
 │
 ├── .gitattributes              # Configuración Git LFS para archivos binarios (HF Spaces)
 ├── Dockerfile                  # Definición del contenedor
@@ -258,6 +263,7 @@ La documentación interactiva estará disponible en `http://localhost:8000/docs`
 | `GET` | `/health` | Estado del servicio |
 | `POST` | `/upload` | Subir e indexar un documento PDF |
 | `POST` | `/query` | Realizar una consulta en lenguaje natural |
+| `POST` | `/agent/query` | Consulta con agente RAG adaptativo (Router + Grader + Rewriter) |
 
 ### Ejemplo de uso previsto
 

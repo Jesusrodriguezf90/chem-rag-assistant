@@ -8,8 +8,13 @@ Responsabilidad:
     Pydantic valida automáticamente los tipos y valores de entrada
     y serializa las respuestas a JSON.
 
+    Incluye modelos para:
+      - Pipeline RAG clásico: QueryRequest, QueryResponse
+      - Agente RAG LangGraph: AgentQueryRequest, AgentQueryResponse
+      - Sistema: UploadResponse, HealthResponse, ErrorResponse
+
 Autor:   Jesús Rodríguez
-Versión: 1.0.0
+Versión: 1.1.0
 """
 
 from pydantic import BaseModel, Field
@@ -37,6 +42,19 @@ class QueryRequest(BaseModel):
         ge=1,
         le=10,
         description="Número máximo de chunks a recuperar (1-10).",
+    )
+
+class AgentQueryRequest(BaseModel):
+    """Request para el endpoint POST /agent/query.
+
+    Attributes:
+        pregunta: consulta del usuario en cualquier idioma.
+    """
+    pregunta: str = Field(
+        ...,
+        min_length=1,
+        description="Consulta del usuario sobre el documento científico.",
+        examples=["What is the yield of AuL9 in the synthesis described in the paper?"],
     )
 
 # ---------------------------------------------------------------------------
@@ -99,3 +117,28 @@ class ErrorResponse(BaseModel):
     """
     error  : str
     detalle: str = ""
+
+class AgentQueryResponse(BaseModel):
+    """Response para el endpoint POST /agent/query.
+
+    Attributes:
+        pregunta      : consulta original del usuario.
+        respuesta     : respuesta generada por el LLM.
+        ruta          : ruta seguida por el agente
+                        (paper_especifico / general / fuera_dominio).
+        n_chunks      : número de chunks usados como contexto.
+                        0 si la ruta fue general o fuera_dominio.
+        intentos      : número de intentos de recuperación realizados.
+                        0 si los chunks fueron relevantes en el primer intento.
+        tiempo_total_s: tiempo de ejecución end-to-end en segundos.
+    """
+    pregunta      : str
+    respuesta     : str
+    ruta          : str = Field(
+        description="Ruta seguida: paper_especifico, general o fuera_dominio.",
+    )
+    n_chunks      : int
+    intentos      : int = Field(
+        description="Número de intentos de reescritura de query (0-2).",
+    )
+    tiempo_total_s: float
