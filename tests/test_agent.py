@@ -249,10 +249,11 @@ class TestRewriter:
         # El segundo Grader(no) activa el Generator por límite de reintentos
         respuestas = [
             "paper_especifico",          # Router
-            "no",                        # Grader intento 1 — no relevante
-            "query reescrita 1",         # Rewriter intento 1
-            "no",                        # Grader intento 2 — no relevante
-            "query reescrita 2",         # Rewriter intento 2 — límite alcanzado
+            "no",                        # Grader intento 1 — no relevante, intentos=0 < 2 → Rewriter
+            "query reescrita 1",         # Rewriter intento 1 — intentos=1
+            "no",                        # Grader intento 2 — no relevante, intentos=1 < 2 → Rewriter
+            "query reescrita 2",         # Rewriter intento 2 — intentos=2
+            "no",                        # Grader intento 3 — intentos=2 >= 2 → Generator
             "The yield of AuL9 is 47%.", # Generator final
         ]
         ag, resp = _agente_con_secuencia_llm(mock_embedder, mock_vector_store, respuestas)
