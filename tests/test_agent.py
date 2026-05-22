@@ -244,12 +244,17 @@ class TestRewriter:
     def test_rewriter_no_supera_limite_max_reintentos(
         self, mock_embedder, mock_vector_store
     ):
-        # Grader siempre dice "no" — el Rewriter debe detenerse en MAX_REINTENTOS
-        respuestas = (
-            ["paper_especifico"]                         # Router
-            + ["no", "query reescrita"] * MAX_REINTENTOS # Grader + Rewriter × MAX_REINTENTOS
-            + ["The yield of AuL9 is 47%."]              # Generator final
-        )
+        # Flujo con MAX_REINTENTOS=2:
+        # Router → Retriever → Grader(no) → Rewriter → Retriever → Grader(no) → Generator
+        # El segundo Grader(no) activa el Generator por límite de reintentos
+        respuestas = [
+            "paper_especifico",          # Router
+            "no",                        # Grader intento 1 — no relevante
+            "query reescrita 1",         # Rewriter intento 1
+            "no",                        # Grader intento 2 — no relevante
+            "query reescrita 2",         # Rewriter intento 2 — límite alcanzado
+            "The yield of AuL9 is 47%.", # Generator final
+        ]
         ag, resp = _agente_con_secuencia_llm(mock_embedder, mock_vector_store, respuestas)
         with patch("src.agent.graph._llamar_llm", side_effect=resp):
             resultado = ag.query("What is the yield of AuL9?")
@@ -338,15 +343,25 @@ class TestConfiguracion:
 class TestThinkingMode:
     """Tests para la supresión del bloque <think> de Qwen3."""
 
-    def test_elimina_bloque_think_en_respuesta(
-        self, mock_embedder, mock_vector_store
-    ):
-        respuestas = [
-            "general",
-            "<think>Reasoning step...</think>\nAn NHC is a stable carbene ligand.",
-        ]
-        ag, resp = _agente_con_secuencia_llm(mock_embedder, mock_vector_store, respuestas)
-        with patch("src.agent.graph._llamar_llm", side_effect=resp):
-            resultado = ag.query("What is an NHC?")
-        assert "<think>" not in resultado.respuesta
-        assert "An NHC is a stable carbene ligand." in resultado.respuesta
+    def test_elimina_bloque_think_en_respuesta(self, mock_embedder, mock_vector_store):
+        """Verifica que _llamar_llm elimina el bloque <think> de Qwen3.
+
+        Se testea _llamar_llm directamente porque mockear la función completa
+        bypassea el re.sub interno.
+        """
+        from src.agent.graph import _llamar_llm
+
+        mock_cliente = MagicMock()
+        mock_cliente.chat.completions.create.return_value.choices[
+            0
+        ].message.content = (
+            "<think>Reasoning step...</think>\nAn NHC is a stable carbene ligand."
+        )
+
+        resultado = _llamar_llm(
+            mock_cliente,
+            [{"role": "user", "content": "What is an NHC?"}],
+        )
+
+        assert "<think>" not in resultado
+        assert "An NHC is a stable carbene ligand." in resultado
